@@ -1,0 +1,8 @@
+name: AHUNScheduleAPI
+channels:
+  - defaults
+dependencies:
+  - python==3.12.8
+  - numpy
+  - opencv
+prefix: /opt/miniconda3/envs/AHUNScheduleAPI
