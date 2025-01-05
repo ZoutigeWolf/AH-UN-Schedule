@@ -23,4 +23,8 @@ class UserRead(UserBase):
     pass
 
 
+class UserUpdate(SQLModel):
+    admin: bool | None
+
+
 from src.models.shift import Shift

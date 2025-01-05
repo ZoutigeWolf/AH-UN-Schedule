@@ -9,55 +9,49 @@ import SwiftUI
 
 struct UsersView: View {
     @State var users: [User] = []
-    
     @State var isLoading: Bool = false
     
     var body: some View {
         NavigationStack {
-            if isLoading && users.count == 0 {
+            if isLoading && users.isEmpty {
                 ProgressView()
-            }
-            
-            List {
-                ForEach(users, id: \.username) { user in
-                    NavigationLink(destination: EditUserView(user: user)) {
-                        HStack {
-                            Text(user.username)
-                            
-                            if user.admin {
-                                Image(systemName: "person.badge.key.fill")
+            } else {
+                List {
+                    Section(header: Text("Admins")) {
+                        ForEach(users.filter { $0.admin }.sorted(by: { $0.username > $1.username }), id: \.username) { user in
+                            NavigationLink(destination: EditUserView(user: user)) {
+                                HStack {
+                                    Text(user.name)
+                                    
+                                    Image(systemName: "person.badge.key.fill")
+                                }
+                            }
+                        }
+                    }
+                    
+                    ForEach(users.filter { !$0.admin }.sorted(by: { $0.username > $1.username }), id: \.username) { user in
+                        NavigationLink(destination: EditUserView(user: user)) {
+                            HStack {
+                                Text(user.name)
                             }
                         }
                     }
                 }
+                .navigationTitle("Users")
+                .navigationBarTitleDisplayMode(.inline)
+                .refreshable {
+                    refresh()
+                }
             }
-            .id(UUID())
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-//                ToolbarItem(placement: .principal) {
-//                    Text("Users")
-//                        .bold()
-//                }
-//                
-//                ToolbarItem(placement: .confirmationAction) {
-//                    NavigationLink(destination: EditUserView(user: User(name: "", token: "", isAdmin: false), isNew: true)) {
-//                        Image(systemName: "plus")
-//                    }
-//                }
-            }
-            .onAppear {
-                refresh()
-            }
-            .refreshable {
-                refresh()
-            }
+        }
+        .onAppear {
+            refresh()
         }
     }
     
     func refresh() {
         isLoading = true
-        
-        UserManager.getUsers() { users in
+        UserManager.getUsers { users in
             DispatchQueue.main.async {
                 self.users = users
                 isLoading = false

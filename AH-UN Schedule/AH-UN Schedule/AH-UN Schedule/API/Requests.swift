@@ -20,6 +20,10 @@ class Requests {
         makeRequest(url: url, method: .PUT, token: token, data: data, returnType: T.self, completion: completion)
     }
     
+    static func patch<T: Decodable>(url: String, token: String?  = nil, data: Encodable, completion: @escaping (Result<T, NetworkError>) -> Void) {
+        makeRequest(url: url, method: .PATCH, token: token, data: data, returnType: T.self, completion: completion)
+    }
+    
     static func delete<T: Decodable>(url: String, token: String?  = nil, completion: @escaping (Result<T, NetworkError>) -> Void) {
         makeRequest(url: url, method: .DELETE, token: token, returnType: T.self, completion: completion)
     }
@@ -43,6 +47,7 @@ class Requests {
            let jsonData = try? JSONEncoder().encode(data) {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonData
+            print(String(decoding: jsonData, as: UTF8.self))
         }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
@@ -76,6 +81,7 @@ enum HTTPMethod: String {
     case GET = "GET"
     case POST = "POST"
     case PUT = "PUT"
+    case PATCH = "PATCH"
     case DELETE = "DELETE"
 }
 

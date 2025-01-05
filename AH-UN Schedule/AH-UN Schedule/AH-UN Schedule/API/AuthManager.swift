@@ -10,7 +10,7 @@ import Foundation
 class AuthManager: ObservableObject {
     public static let shared = AuthManager()
     
-//    static let serverUrl: String = "https://api.ah-un-schedule.zoutigewolf.dev"
+//    static let serverUrl: String = "https://ah-un.zoutigewolf.dev"
     static let serverUrl: String = "http://localhost:8000"
     
     @Published var user: User?

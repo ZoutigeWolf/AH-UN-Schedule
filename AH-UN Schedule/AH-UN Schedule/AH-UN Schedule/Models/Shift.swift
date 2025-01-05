@@ -12,6 +12,7 @@ struct Shift: Codable {
     var username: String
     var start: Date
     var end: Date?
+    var canceled: Bool
     var position: Position
     
     var user: User
@@ -35,6 +36,8 @@ struct Shift: Codable {
         } else {
             self.end = nil
         }
+        
+        self.canceled = try container.decode(Bool.self, forKey: .canceled)
         
         self.position = .None
         

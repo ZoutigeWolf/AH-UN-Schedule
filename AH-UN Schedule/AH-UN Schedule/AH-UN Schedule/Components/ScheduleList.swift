@@ -38,7 +38,7 @@ struct ScheduleList: View {
                 ForEach(groupByTimes(schedule![date]!).sorted(by: { $0.key < $1.key }), id: \.0) { time, shifts in
                     Section(header: Text(time)) {
                         ForEach(shifts, id: \.id) { s in
-                            if (AuthManager.shared.user!.username == s.user.username) {
+                            if (AuthManager.shared.user!.username == s.user.username || AuthManager.shared.user!.admin) {
                                 NavigationLink(destination: EditShiftView(shift: s)) {
                                     ScheduleItem(shift: s)
                                 }

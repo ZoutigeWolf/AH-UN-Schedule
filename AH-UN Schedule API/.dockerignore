@@ -1,0 +1,8 @@
+**
+
+!src/
+!alembic/
+
+!alembic.ini
+!Dockerfile
+!environment.yml

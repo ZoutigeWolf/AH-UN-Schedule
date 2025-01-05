@@ -1,8 +1,21 @@
-name: AHUNScheduleAPI
+name: base
 channels:
-  - defaults
+    - defaults
 dependencies:
-  - python==3.12.8
-  - numpy
-  - opencv
-prefix: /opt/miniconda3/envs/AHUNScheduleAPI
+    - python==3.12.8
+    - numpy
+    - conda-forge::tesseract
+    - fastapi
+    - sqlmodel
+    - python-dotenv
+    - psycopg2
+    - uvicorn
+    - bcrypt
+    - pyjwt
+    - alembic
+    - conda-forge::openai
+    - conda-forge::pytesseract
+    - pip:
+          - tabulate
+          - opencv-python
+ 

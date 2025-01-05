@@ -1,18 +1,26 @@
 import os
 import cv2
+from pydantic import BaseModel
 import pytesseract
 import numpy as np
 from datetime import datetime
 import unicodedata
-
+from openai import OpenAI
+import json
 from sqlmodel import Session, select
+from tabulate import tabulate
 
 from src.models.shift import Shift
 from src.models.user import User
+from sqlite3.dbapi2 import Date
+from multiprocessing.dummy import Value
 
 CELL_SIZE = (79, 23)
 BORDER_WIDTH = 1
 
+openai_client = OpenAI(api_key=os.getenv("OPENAI_KEY"))
+
+ 
 def extract_table_from_image(image: bytes) -> list[list[str]]:
     img = cv2.imdecode(np.frombuffer(image, np.uint8), cv2.IMREAD_COLOR)
 
@@ -47,10 +55,62 @@ def extract_table_from_image(image: bytes) -> list[list[str]]:
     return table
 
 
+def clean_table_with_openai(table: list[list[str]]):
+    class CleanedTable(BaseModel):
+        table: list[list[str]]
+
+    res = openai_client.beta.chat.completions.parse(
+        model="gpt-4o",
+        messages=[
+            {
+                "role": "user",
+                "content": f"""
+                {table}
+                
+                You are a data input scientist that cleans up data for database storage
+                Take the above input data and clean all strings
+
+                Cleanup any errors caused by OCR like extra characters make sure each time is formatted as HH:MM
+                Unicode normalize all characters
+
+                Reformat the dates in the first row using format: yyyy-mm-dd
+                The day this data is uploaded is {datetime.now()}, choose the right year based on this date
+                The first column contains the names for each person
+                Clean up all the names removing any dots or other weird characters
+
+                All the other cells contain times when a shift starts for a specific person on a specific day
+                if the cell contains any prefixes, suffixes or anomalies: clean them up so that only the value remains
+
+                Format the times according to these rules:
+                \"x\" means 11:00
+                \"L\" means 14:00 on wednesday and thursday, else it is 15:00
+                \"V\" or \"Vv\" means 11:00
+
+                Examples:
+                \"17:00afw\" becomes \"17:00\"
+                \"L keuken\" becomes \"14:00\" or \"15:00\" depending on the date
+                \"18:00\" becomes \"18:00\"
+                \"V\" becomes \"11:00\"
+                \"Vv\" becomes \"11:00\"
+
+                Make sure the the scheduled times stay on the correct index in the row by comparing the end result with the original data
+                """
+            }
+        ],
+        response_format=CleanedTable
+    )
+
+    data = json.loads(json.loads(res.choices[0].json())["message"]["content"])["table"]
+
+    print(tabulate(data, headers="firstrow", tablefmt="rounded_grid"))
+
+    return data
+
+
 def convert_table_to_shifts(session: Session, table: list[list[str]]) -> list[Shift]:
     shifts = []
 
-    dates = [datetime.strptime(s.split(" ")[1].replace("-", " ") + f" {datetime.now().year}", "%d %b %Y") for s in table[0][1:]]
+    dates = [datetime.strptime(s, "%Y-%m-%d") for s in table[0][1:]]
 
     for row in table[1:]:
         name = row[0]

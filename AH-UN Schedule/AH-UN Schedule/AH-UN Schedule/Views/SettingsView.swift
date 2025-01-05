@@ -12,8 +12,6 @@ struct SettingsView: View {
     @AppStorage("enableCalendar") private var enableCalendar: Bool = false
     @AppStorage("selectedCalendar") private var selectedCalendar: String?
     @AppStorage("eventTitle") private var eventTitle: String = "Work"
-    @AppStorage("dishesNotation") private var dishesNotation: String = "Dishes"
-    @AppStorage("meatNotation") private var meatNotation: String = "Meat"
     @AppStorage("salary") private var salary: Double = 0
     
     @State private var token: String = ""
@@ -27,10 +25,8 @@ struct SettingsView: View {
     }
     
     var body: some View {
-        List {
-            NavigationLink("Account", destination: EditUserView(user: AuthManager.shared.user!))
-            
-            Section(header: Text("Calendar"), footer: Text("When calendar synchronization is enabled your schedule will automatically be added to the selected calendar when a new schedule is uploaded. Your name must be set for this feature to work.")) {
+        List {            
+            Section(header: Text("Calendar"), footer: Text("When calendar synchronization is enabled your schedule will automatically be added to the selected calendar when a new schedule is uploaded.")) {
                 Toggle(isOn: $enableCalendar) {
                     Text("Sync calendar")
                 }
@@ -48,20 +44,6 @@ struct SettingsView: View {
                 TextField("Title", text: self.$eventTitle)
             }
             
-            Section(header: Text("Position Notations"), footer: Text("How your position is displayed in your calendar.")) {
-                Picker("Dishes", selection: $dishesNotation) {
-                    Text("Dishes").tag("Dishes")
-                    Text("Afwas").tag("Afwas")
-                }
-                .pickerStyle(.segmented)
-                
-                Picker("Meat", selection: $meatNotation) {
-                    Text("Meat").tag("Meat")
-                    Text("Vlees").tag("Vlees")
-                }
-                .pickerStyle(.segmented)
-            }
-            
             Section(header: Text("Wage"), footer: Text("Your wage is used to calculate your estimated salary.")) {
                 Stepper(value: $salary, in: 1...100, step: 0.5) {
                     HStack(alignment: .bottom) {
@@ -73,6 +55,14 @@ struct SettingsView: View {
                     }
                 }
                 .keyboardType(.decimalPad)
+            }
+            
+            Section {
+                Button(role: .destructive) {
+//                    presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Logout")
+                }
             }
         }
         .navigationTitle("Settings")

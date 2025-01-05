@@ -7,6 +7,7 @@ class ShiftBase(SQLModel):
     username: str
     start: datetime
     end: datetime | None
+    canceled: bool
 
 
 class Shift(ShiftBase, table=True):
@@ -14,6 +15,7 @@ class Shift(ShiftBase, table=True):
     username: str = Field(foreign_key="user.username", index=True)
     start: datetime = Field(index=True)
     end: datetime | None = Field(default=None)
+    canceled: bool = Field(default=False)
 
     user: "User" = Relationship(back_populates="shifts")
 
@@ -27,6 +29,12 @@ class Shift(ShiftBase, table=True):
 
 class ShiftRead(ShiftBase):
     user: "UserRead"
+
+
+class ShiftUpdate(SQLModel):
+    start: datetime | None = Field(default=None)
+    end: datetime | None = Field(default=None)
+    canceled: bool | None = Field(default=None)
 
 
 from src.models.user import User, UserRead

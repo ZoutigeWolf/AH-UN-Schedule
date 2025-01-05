@@ -33,13 +33,37 @@ final class ScheduleManager{
         }
     }
     
-    static func editShift(id: String, start: Date, end: Date?, completion: @escaping (Shift?) -> Void) {
+    static func editShift(id: String, start: Date, end: Date?, canceled: Bool, completion: @escaping (Shift?) -> Void) {
         struct _Shift: Codable {
             var start: Date
             var end: Date?
+            var canceled: Bool
+            
+            func encode(to encoder: Encoder) throws {
+                var container = encoder.container(keyedBy: CodingKeys.self)
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+                formatter.timeZone = TimeZone(identifier: "Europe/Amsterdam")
+
+                let formattedStart = formatter.string(from: start)
+                try container.encode(formattedStart, forKey: .start)
+
+                if let end = end {
+                    let formattedEnd = formatter.string(from: end)
+                    try container.encode(formattedEnd, forKey: .end)
+                }
+                
+                try container.encode(canceled, forKey: .canceled)
+            }
+
+            enum CodingKeys: String, CodingKey {
+                case start
+                case end
+                case canceled
+            }
         }
         
-        Requests.put(url: AuthManager.serverUrl + "/schedule/" + id, token: AuthManager.shared.token, data: _Shift(start: start, end: end)) { (res: Result<Shift, NetworkError>) in
+        Requests.patch(url: AuthManager.serverUrl + "/schedule/shift/" + id, token: AuthManager.shared.token, data: _Shift(start: start, end: end, canceled: canceled)) { (res: Result<Shift, NetworkError>) in
             switch res {
             case .failure(_):
                 completion(nil)
