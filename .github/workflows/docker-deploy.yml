@@ -24,6 +24,10 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: List files in the current working directory
+        run: |
+          ls -R
+
       - name: Build and push to local registry
         uses: docker/build-push-action@v6
         with:
