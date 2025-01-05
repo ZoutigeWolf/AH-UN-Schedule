@@ -19,6 +19,6 @@ RUN micromamba install -y -n base -f /tmp/environment.yml && \
 
 WORKDIR /code
 
-COPY src /code/src
+COPY ./src /code/src
 
 CMD ["uvicorn", "src.app:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
