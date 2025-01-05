@@ -10,10 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: "./AH-UN Schedule API"
-
     steps:
       - uses: actions/checkout@v4
 
@@ -23,16 +19,16 @@ jobs:
           registry: ${{ secrets.REGISTRY_URL }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-
-      - name: List files in the current working directory
-        run: |
-          ls -R
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Build and push to local registry
         uses: docker/build-push-action@v6
         with:
           push: true
-          file: "AH-UN Schedule API/Dockerfile"
+          context: "AH-UN Schedule API"
+          platforms: linux/amd64
           tags: ${{ secrets.REGISTRY_URL }}/ah-un-schedule:latest
           
       - name: Restart docker container
