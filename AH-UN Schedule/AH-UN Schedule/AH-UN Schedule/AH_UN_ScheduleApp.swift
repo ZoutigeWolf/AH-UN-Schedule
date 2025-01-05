@@ -7,8 +7,11 @@
 
 import SwiftUI
 
+
 @main
 struct AH_UN_ScheduleApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     @ObservedObject var authentication = AuthManager.shared
     
     var body: some Scene {
@@ -51,6 +54,20 @@ struct HomeView: View {
                     .foregroundStyle(.white)
             }
         }
+    }
+}
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceTokenData: Data) {
+        let token = deviceTokenData.map { String(format: "%02x", $0) }.joined()
+        
+        print("Device Token: \(token)")
+        
+        UserManager.registerDevice(device: token) { res in }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print("Failed to register for remote notifications: \(error.localizedDescription)")
     }
 }
 

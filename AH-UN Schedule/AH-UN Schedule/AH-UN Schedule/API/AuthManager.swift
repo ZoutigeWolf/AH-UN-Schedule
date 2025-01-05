@@ -6,12 +6,14 @@
 //
 
 import Foundation
+import SwiftUI
+import UserNotifications
 
 class AuthManager: ObservableObject {
     public static let shared = AuthManager()
     
-//    static let serverUrl: String = "https://ah-un.zoutigewolf.dev"
-    static let serverUrl: String = "http://localhost:8000"
+    static let serverUrl: String = "https://ah-un.zoutigewolf.dev"
+//    static let serverUrl: String = "http://localhost:8000"
     
     @Published var user: User?
     var token: String?
@@ -56,6 +58,14 @@ class AuthManager: ObservableObject {
                 
                 self.getUser() { res in
                     completion(res)
+                }
+                
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, err in
+                    if granted {
+                        DispatchQueue.main.async {
+                            UIApplication.shared.registerForRemoteNotifications()
+                        }
+                    }
                 }
             }
         }

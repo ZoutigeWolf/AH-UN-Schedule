@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlmodel import Session, select
 
 from src.database import get_session
 from src.middleware.auth import require_auth
 from src.models.user import User, UserRead, UserUpdate
+from src.models.user_device import UserDevice
+from src.types import DeviceInfo
 
 
 router = APIRouter(
@@ -85,4 +86,35 @@ async def delete_user(
 
     session.delete(user)
 
-    return JSONResponse(content=None, status_code=200)
+    return Response(status_code=200)
+
+
+@router.post("/{username}/devices")
+async def add_device(
+    username: str,
+    info: DeviceInfo,
+    session: Session = Depends(get_session),
+    user: User = Depends(require_auth),
+):
+    if username != user.username:
+        raise HTTPException(status_code=403)
+
+    device = session.exec(
+        select(UserDevice)
+        .where(
+            UserDevice.username == user.username,
+            UserDevice.device == info.device
+        )
+    ).one_or_none()
+
+    if device:
+        raise HTTPException(status_code=409)
+
+    device = UserDevice(
+        username=user.username,
+        device=info.device
+    )
+
+    session.add(device)
+
+    return Response(status_code=201)

@@ -13,6 +13,7 @@ class User(UserBase, table=True):
     admin: bool = Field()
 
     shifts: list["Shift"] = Relationship(back_populates="user", sa_relationship_kwargs={"cascade": "all, delete-orphan"})
+    devices: list["UserDevice"] = Relationship(back_populates="user", sa_relationship_kwargs={"cascade": "all, delete-orphan"})
 
     def serialize(self) -> "UserRead":
         u = self.model_dump()
@@ -28,3 +29,4 @@ class UserUpdate(SQLModel):
 
 
 from src.models.shift import Shift
+from src.models.user_device import UserDevice

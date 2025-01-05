@@ -55,4 +55,23 @@ class UserManager {
             }
         }
     }
+    
+    static func registerDevice(device: String, completion: @escaping (Bool) -> Void) {
+        struct _DeviceInfo: Codable {
+            var device: String
+        }
+        
+        guard let username = AuthManager.shared.user?.username else {
+            completion(false)
+            return
+        }
+        
+        Requests.post(url: AuthManager.serverUrl + "/users/" + username + "/devices", token: AuthManager.shared.token, data: _DeviceInfo(device: device)) { (res: Result<User, NetworkError>) in
+            switch res {
+            case .failure(let error):
+                completion(false)
+            case .success(_):
+                completion(true)
+            }
+        }    }
 }

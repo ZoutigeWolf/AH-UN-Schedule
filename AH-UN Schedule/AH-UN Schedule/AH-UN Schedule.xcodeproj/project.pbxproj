@@ -71,6 +71,7 @@
 		813D753B2BACEA37005CC6EA /* Requests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requests.swift; sourceTree = "<group>"; };
 		813D753D2BADB911005CC6EA /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		813D75442BB0830A005CC6EA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		81482AE92D2B3AF9008C1278 /* AH-UN ScheduleDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AH-UN ScheduleDebug.entitlements"; sourceTree = "<group>"; };
 		8196E4B62BA9CE80004FFD5C /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		8196E4B82BAAE111004FFD5C /* EditShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShiftView.swift; sourceTree = "<group>"; };
 		81AF41192BB46597000DB01C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 		812EEEE02BA383550034E576 /* AH-UN Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				81482AE92D2B3AF9008C1278 /* AH-UN ScheduleDebug.entitlements */,
 				812EEEE12BA383550034E576 /* AH_UN_ScheduleApp.swift */,
 				81CCABB42BA5F19B00332A1D /* AH-UN-Schedule-Info.plist */,
 				81CCD5DE2BA63DBA00EFB5D2 /* PrivacyInfo.xcprivacy */,
@@ -489,6 +491,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AH-UN Schedule/AH-UN ScheduleDebug.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AH-UN Schedule/Preview Content\"";
@@ -527,6 +530,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AH-UN Schedule/AH-UN ScheduleRelease.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AH-UN Schedule/Preview Content\"";
@@ -550,6 +555,7 @@
 				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ZoutigeWolf.AH-UN-Schedule";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
