@@ -120,6 +120,13 @@ final class DateUtils {
             return 0
         }
     }
+    
+    static func parseHours(_ hours: Double) -> (Int, Int) {
+        let h = Int(hours)
+        let m = Int((hours - Double(h)) * 60)
+        
+        return (h, m)
+    }
 }
 
 extension Date {
@@ -147,15 +154,25 @@ extension Date {
         return Date(timeInterval: secondsFromGMT, since: self)
     }
     
+    func roundedToNearestQuarterHour() -> Date {
+        let calendar = Calendar.current
+        let minutes = calendar.component(.minute, from: self)
+        let remainder = minutes % 15
+        let adjustment = remainder < 8 ? -remainder : (15 - remainder)
+        return calendar.date(byAdding: .minute, value: adjustment, to: self) ?? self
+    }
+    
     static func fromString(_ dateString: String, as format: String) -> Date? {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = format
         
         return dateFormatter.date(from: dateString)
     }
     
-    func toString( as format: String) -> String {
+    func toString(as format: String) -> String {
         let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = format
         
         return dateFormatter.string(from: self)

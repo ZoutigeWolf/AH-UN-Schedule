@@ -12,7 +12,7 @@ class ShiftBase(SQLModel):
 
 class Shift(ShiftBase, table=True):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
-    username: str = Field(foreign_key="user.username", index=True)
+    username: str = Field(index=True, foreign_key="user.username")
     start: datetime = Field(index=True)
     end: datetime | None = Field(default=None)
     canceled: bool = Field(default=False)

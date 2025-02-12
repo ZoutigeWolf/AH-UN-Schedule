@@ -19,14 +19,18 @@
 		812EEEFE2BA3B5F60034E576 /* Shift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812EEEFD2BA3B5F60034E576 /* Shift.swift */; };
 		812EEF022BA3EF930034E576 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812EEF012BA3EF930034E576 /* SettingsView.swift */; };
 		812EEF042BA3F8630034E576 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812EEF032BA3F8630034E576 /* ScheduleView.swift */; };
-		812EEF092BA5EFE30034E576 /* CalendarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812EEF082BA5EFE30034E576 /* CalendarManager.swift */; };
+		8136782E2D2D7E2B00EF4A97 /* AccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8136782D2D2D7E2B00EF4A97 /* AccountSettingsView.swift */; };
+		813678302D2D7E3700EF4A97 /* CalendarSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8136782F2D2D7E3700EF4A97 /* CalendarSettingsView.swift */; };
+		813678332D2D7E4E00EF4A97 /* NotificationsSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813678322D2D7E4E00EF4A97 /* NotificationsSettingsView.swift */; };
+		813678352D2E790000EF4A97 /* ChangePasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813678342D2E790000EF4A97 /* ChangePasswordView.swift */; };
 		813D75342BACCF6C005CC6EA /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D75332BACCF6C005CC6EA /* AuthManager.swift */; };
 		813D75362BACDAF9005CC6EA /* ToggleableSecureInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D75352BACDAF9005CC6EA /* ToggleableSecureInput.swift */; };
 		813D753A2BACE253005CC6EA /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D75392BACE253005CC6EA /* UsersView.swift */; };
 		813D753C2BACEA37005CC6EA /* Requests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D753B2BACEA37005CC6EA /* Requests.swift */; };
 		813D753E2BADB911005CC6EA /* EditUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D753D2BADB911005CC6EA /* EditUserView.swift */; };
 		813D75452BB0830A005CC6EA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 813D75442BB0830A005CC6EA /* User.swift */; };
-		8196E4B72BA9CE80004FFD5C /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196E4B62BA9CE80004FFD5C /* Configuration.swift */; };
+		81583F612D2FCEF200F622D3 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81583F602D2FCEF200F622D3 /* SettingsManager.swift */; };
+		81583F632D2FCF1F00F622D3 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81583F622D2FCF1F00F622D3 /* Settings.swift */; };
 		8196E4B92BAAE111004FFD5C /* EditShiftView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8196E4B82BAAE111004FFD5C /* EditShiftView.swift */; };
 		81AF411A2BB46597000DB01C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF41192BB46597000DB01C /* LoginView.swift */; };
 		81AF41202BB4F47F000DB01C /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81AF411F2BB4F47F000DB01C /* UserManager.swift */; };
@@ -37,6 +41,7 @@
 		81CCD5E72BA6A42200EFB5D2 /* Insights.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CCD5E62BA6A42200EFB5D2 /* Insights.swift */; };
 		81CCD5F72BA729AB00EFB5D2 /* DateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81CCD5F62BA729AB00EFB5D2 /* DateTests.swift */; };
 		81CCD5FD2BA72AEF00EFB5D2 /* DateUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 812EEEF42BA39A350034E576 /* DateUtils.swift */; };
+		81D8E4AC2D369EF8000FC170 /* Insight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D8E4AB2D369EF8000FC170 /* Insight.swift */; };
 		81DC782B2BB51C0F000265BF /* AHUN.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 81DC782A2BB51C0F000265BF /* AHUN.mp4 */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +54,19 @@
 			remoteInfo = "AH-UN Schedule";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		81583F7F2D301C8E00F622D3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		812EEEDE2BA383550034E576 /* AH-UN Schedule.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AH-UN Schedule.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,7 +82,10 @@
 		812EEEFD2BA3B5F60034E576 /* Shift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shift.swift; sourceTree = "<group>"; };
 		812EEF012BA3EF930034E576 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		812EEF032BA3F8630034E576 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
-		812EEF082BA5EFE30034E576 /* CalendarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarManager.swift; sourceTree = "<group>"; };
+		8136782D2D2D7E2B00EF4A97 /* AccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountSettingsView.swift; sourceTree = "<group>"; };
+		8136782F2D2D7E3700EF4A97 /* CalendarSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSettingsView.swift; sourceTree = "<group>"; };
+		813678322D2D7E4E00EF4A97 /* NotificationsSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsSettingsView.swift; sourceTree = "<group>"; };
+		813678342D2E790000EF4A97 /* ChangePasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordView.swift; sourceTree = "<group>"; };
 		813D75332BACCF6C005CC6EA /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		813D75352BACDAF9005CC6EA /* ToggleableSecureInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleableSecureInput.swift; sourceTree = "<group>"; };
 		813D75392BACE253005CC6EA /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
@@ -72,7 +93,10 @@
 		813D753D2BADB911005CC6EA /* EditUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditUserView.swift; sourceTree = "<group>"; };
 		813D75442BB0830A005CC6EA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		81482AE92D2B3AF9008C1278 /* AH-UN ScheduleDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "AH-UN ScheduleDebug.entitlements"; sourceTree = "<group>"; };
-		8196E4B62BA9CE80004FFD5C /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		81583F602D2FCEF200F622D3 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		81583F622D2FCF1F00F622D3 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		81583F6A2D301C8C00F622D3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		81583F6C2D301C8C00F622D3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		8196E4B82BAAE111004FFD5C /* EditShiftView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditShiftView.swift; sourceTree = "<group>"; };
 		81AF41192BB46597000DB01C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		81AF411F2BB4F47F000DB01C /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -84,6 +108,7 @@
 		81CCD5E62BA6A42200EFB5D2 /* Insights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insights.swift; sourceTree = "<group>"; };
 		81CCD5F42BA729AB00EFB5D2 /* AH-UN Schedule Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AH-UN Schedule Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81CCD5F62BA729AB00EFB5D2 /* DateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTests.swift; sourceTree = "<group>"; };
+		81D8E4AB2D369EF8000FC170 /* Insight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insight.swift; sourceTree = "<group>"; };
 		81DC782A2BB51C0F000265BF /* AHUN.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = AHUN.mp4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,6 +135,7 @@
 			children = (
 				812EEEE02BA383550034E576 /* AH-UN Schedule */,
 				81CCD5F52BA729AB00EFB5D2 /* AH-UN Schedule Tests */,
+				81583F692D301C8C00F622D3 /* Frameworks */,
 				812EEEDF2BA383550034E576 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -136,9 +162,6 @@
 				813D75412BB082D1005CC6EA /* Models */,
 				812EEF052BA5EA730034E576 /* Views */,
 				812EEEEF2BA397310034E576 /* Components */,
-				8196E4B62BA9CE80004FFD5C /* Configuration.swift */,
-				81CCD5E62BA6A42200EFB5D2 /* Insights.swift */,
-				812EEF082BA5EFE30034E576 /* CalendarManager.swift */,
 				812EEEF42BA39A350034E576 /* DateUtils.swift */,
 				812EEEE72BA383560034E576 /* Preview Content */,
 			);
@@ -177,6 +200,10 @@
 				813D75392BACE253005CC6EA /* UsersView.swift */,
 				813D753D2BADB911005CC6EA /* EditUserView.swift */,
 				81AF41192BB46597000DB01C /* LoginView.swift */,
+				8136782D2D2D7E2B00EF4A97 /* AccountSettingsView.swift */,
+				8136782F2D2D7E3700EF4A97 /* CalendarSettingsView.swift */,
+				813678322D2D7E4E00EF4A97 /* NotificationsSettingsView.swift */,
+				813678342D2E790000EF4A97 /* ChangePasswordView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -185,9 +212,20 @@
 			isa = PBXGroup;
 			children = (
 				812EEEFD2BA3B5F60034E576 /* Shift.swift */,
+				81D8E4AB2D369EF8000FC170 /* Insight.swift */,
+				81583F622D2FCF1F00F622D3 /* Settings.swift */,
 				813D75442BB0830A005CC6EA /* User.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		81583F692D301C8C00F622D3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				81583F6A2D301C8C00F622D3 /* WidgetKit.framework */,
+				81583F6C2D301C8C00F622D3 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		81AF411B2BB4673A000DB01C /* Videos */ = {
@@ -205,6 +243,8 @@
 				813D75332BACCF6C005CC6EA /* AuthManager.swift */,
 				812EEEFA2BA3B44C0034E576 /* ScheduleManager.swift */,
 				81AF411F2BB4F47F000DB01C /* UserManager.swift */,
+				81583F602D2FCEF200F622D3 /* SettingsManager.swift */,
+				81CCD5E62BA6A42200EFB5D2 /* Insights.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -227,6 +267,7 @@
 				812EEEDA2BA383550034E576 /* Sources */,
 				812EEEDB2BA383550034E576 /* Frameworks */,
 				812EEEDC2BA383550034E576 /* Resources */,
+				81583F7F2D301C8E00F622D3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -262,7 +303,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					812EEEDD2BA383550034E576 = {
@@ -319,13 +360,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				813678352D2E790000EF4A97 /* ChangePasswordView.swift in Sources */,
 				812EEEF32BA397940034E576 /* DayController.swift in Sources */,
 				81AF411A2BB46597000DB01C /* LoginView.swift in Sources */,
 				81AF41202BB4F47F000DB01C /* UserManager.swift in Sources */,
 				813D753E2BADB911005CC6EA /* EditUserView.swift in Sources */,
 				812EEEFB2BA3B44C0034E576 /* ScheduleManager.swift in Sources */,
 				812EEF042BA3F8630034E576 /* ScheduleView.swift in Sources */,
-				812EEF092BA5EFE30034E576 /* CalendarManager.swift in Sources */,
 				812EEEF52BA39A350034E576 /* DateUtils.swift in Sources */,
 				81CCD5E12BA6875E00EFB5D2 /* InsightsView.swift in Sources */,
 				81CCD5E32BA6894300EFB5D2 /* MonthController.swift in Sources */,
@@ -334,13 +375,18 @@
 				812EEEF92BA3B1CC0034E576 /* ScheduleItem.swift in Sources */,
 				813D75342BACCF6C005CC6EA /* AuthManager.swift in Sources */,
 				812EEEE22BA383550034E576 /* AH_UN_ScheduleApp.swift in Sources */,
+				8136782E2D2D7E2B00EF4A97 /* AccountSettingsView.swift in Sources */,
 				81CCD5E72BA6A42200EFB5D2 /* Insights.swift in Sources */,
-				8196E4B72BA9CE80004FFD5C /* Configuration.swift in Sources */,
+				813678302D2D7E3700EF4A97 /* CalendarSettingsView.swift in Sources */,
+				81583F632D2FCF1F00F622D3 /* Settings.swift in Sources */,
 				812EEEF72BA3B0CF0034E576 /* ScheduleList.swift in Sources */,
 				812EEEFE2BA3B5F60034E576 /* Shift.swift in Sources */,
 				8196E4B92BAAE111004FFD5C /* EditShiftView.swift in Sources */,
+				81D8E4AC2D369EF8000FC170 /* Insight.swift in Sources */,
 				812EEEF12BA397690034E576 /* WeekController.swift in Sources */,
 				81CCD5E52BA6989500EFB5D2 /* StatBox.swift in Sources */,
+				813678332D2D7E4E00EF4A97 /* NotificationsSettingsView.swift in Sources */,
+				81583F612D2FCEF200F622D3 /* SettingsManager.swift in Sources */,
 				813D753C2BACEA37005CC6EA /* Requests.swift in Sources */,
 				813D75452BB0830A005CC6EA /* User.swift in Sources */,
 				812EEF022BA3EF930034E576 /* SettingsView.swift in Sources */,
@@ -492,6 +538,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "AH-UN Schedule/AH-UN ScheduleDebug.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"AH-UN Schedule/Preview Content\"";
@@ -507,14 +554,15 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ZoutigeWolf.AH-UN-Schedule";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -547,12 +595,12 @@
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.ZoutigeWolf.AH-UN-Schedule";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -1,16 +1,10 @@
 #!/bin/bash
 
-# Variables
 IMAGE_NAME="ah-un-schedule-api"
 TAG="latest"
 DOCKER_REGISTRY="registry.zoutigewolf.dev"
-POST_URL="https://portainer.zoutigewolf.dev/api/webhooks/698202a8-6946-49e0-811a-0e9ebc52c597"
+POST_URL="https://portainer.zoutigewolf.dev/api/webhooks/733f57ed-5335-4a99-8adc-41d14fffc5fc"
 
-# Build Docker image for amd64
-docker buildx build --platform linux/amd64 -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG} .
+docker buildx build --platform linux/amd64 -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG} --push .
 
-# Push Docker image to registry
-docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${TAG}
-
-# Make POST request
 curl -X POST ${POST_URL}

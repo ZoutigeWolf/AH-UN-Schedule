@@ -18,18 +18,16 @@ struct UsersView: View {
             } else {
                 List {
                     Section(header: Text("Admins")) {
-                        ForEach(users.filter { $0.admin }.sorted(by: { $0.username > $1.username }), id: \.username) { user in
+                        ForEach(users.filter { $0.admin }.sorted(by: { $0.username < $1.username }), id: \.username) { user in
                             NavigationLink(destination: EditUserView(user: user)) {
                                 HStack {
                                     Text(user.name)
-                                    
-                                    Image(systemName: "person.badge.key.fill")
                                 }
                             }
                         }
                     }
                     
-                    ForEach(users.filter { !$0.admin }.sorted(by: { $0.username > $1.username }), id: \.username) { user in
+                    ForEach(users.filter { !$0.admin }.sorted(by: { $0.username < $1.username }), id: \.username) { user in
                         NavigationLink(destination: EditUserView(user: user)) {
                             HStack {
                                 Text(user.name)

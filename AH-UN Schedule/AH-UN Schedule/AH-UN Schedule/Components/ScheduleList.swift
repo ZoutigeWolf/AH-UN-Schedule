@@ -14,8 +14,7 @@ struct ScheduleList: View {
     @Binding var schedule: [Date: [Shift]]?
     
     @State var selectedPhoto: PhotosPickerItem?
-    @State var isLoading: Bool = false
-    @State var showFailedAlert: Bool = false
+    @State var showUploadAlert: Bool = false
     
     func groupByTimes(_ shifts: [Shift]) -> [String: [Shift]] {
         var groups: [String: [Shift]] = [:]
@@ -35,10 +34,13 @@ struct ScheduleList: View {
     var body: some View {
         if (schedule?[date]?.count ?? 0 > 0) {
             List {
-                ForEach(groupByTimes(schedule![date]!).sorted(by: { $0.key < $1.key }), id: \.0) { time, shifts in
-                    Section(header: Text(time)) {
+                
+                let groups = groupByTimes(schedule![date]!).sorted(by: { $0.key < $1.key })
+                
+                ForEach(groups, id: \.0) { time, shifts in
+                    Section {
                         ForEach(shifts, id: \.id) { s in
-                            if (AuthManager.shared.user!.username == s.user.username || AuthManager.shared.user!.admin) {
+                            if (AuthManager.shared.user!.username == s.user!.username || AuthManager.shared.user!.admin) {
                                 NavigationLink(destination: EditShiftView(shift: s)) {
                                     ScheduleItem(shift: s)
                                 }
@@ -46,49 +48,36 @@ struct ScheduleList: View {
                                 ScheduleItem(shift: s)
                             }
                         }
+                    } header: {
+                        Text(time)
                     }
                 }
-            }
-            .listSectionSpacing(.compact)
-            .onAppear {
-                reload()
-            }
-            .onChange(of: date) {
-                reload()
+                
+//                Button {
+//                    print(date)
+//                } label: {
+//                    Text(Calendar.current.date(byAdding: .day, value: 1, to: date)! >= Date.now ? "I work this day" : "I worked this day")
+//                }
             }
         } else {
             VStack {
                 Spacer()
                 
-                if !isLoading {
-                    Text("No schedule for this week yet.")
-                        .padding(.bottom, 4)
-                    
-                    if AuthManager.shared.user!.admin {
-                        PhotosPicker(selection: $selectedPhoto, matching: .any(of: [.images, .not(.livePhotos)])) {
-                            Text("Add schedule")
-                        }
-                    }
-                } else {
-                    ProgressView() {
-                        Text("Processing schedule...")
+                Text("No schedule for this week yet.")
+                    .padding(.bottom, 4)
+                
+                if AuthManager.shared.user!.admin {
+                    PhotosPicker(selection: $selectedPhoto, matching: .any(of: [.images, .not(.livePhotos)])) {
+                        Text("Add schedule")
                     }
                 }
                 
                 Spacer()
             }
-            .alert(isPresented: $showFailedAlert) {
-                Alert(title: Text("Failed to upload schedule"))
+            .alert(isPresented: $showUploadAlert) {
+                Alert(title: Text("Schedule uploaded successfully, you'll be notified when it has been processed."))
             }
-            .onAppear {
-                reload()
-            }
-            .onChange(of: date) {
-                reload()
-            }
-            .onChange(of: selectedPhoto) {
-                isLoading = true
-                
+            .onChange(of: selectedPhoto) { _ in
                 Task {
                     let image = try? await selectedPhoto?.loadTransferable(type: Data.self)
                     
@@ -99,29 +88,11 @@ struct ScheduleList: View {
                     }
                     
                     ScheduleManager.parse(image) { res in
-                        if res {
-                            DispatchQueue.main.async {
-                                isLoading = false;
-                                
-                                reload()
-                            }
-                        } else {
-                            DispatchQueue.main.async {
-                                showFailedAlert = true
-                                isLoading = false;
-                            }
+                        DispatchQueue.main.async {
+                            showUploadAlert = true
                         }
                     }
                 }
-            }
-        }
-    }
-    
-    func reload() {
-        ScheduleManager.getWeekSchedule(year: DateUtils.getDateComponent(date, .year), week: DateUtils.getDateComponent(date, .weekOfYear)) { schedule in
-            DispatchQueue.main.async {
-                self.schedule = schedule
-                print(schedule)
             }
         }
     }

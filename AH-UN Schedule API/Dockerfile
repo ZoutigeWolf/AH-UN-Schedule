@@ -6,9 +6,6 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1-mesa-glx \
     libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libxrender-dev \
     tesseract-ocr \
     libtesseract-dev \
     libleptonica-dev \
@@ -21,4 +18,4 @@ WORKDIR /code
 
 COPY ./src /code/src
 
-CMD ["uvicorn", "src.app:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
+CMD ["uvicorn", "src.app:app", "--proxy-headers", "--host", "0.0.0.0", "--port", "80", "--workers", "1"]

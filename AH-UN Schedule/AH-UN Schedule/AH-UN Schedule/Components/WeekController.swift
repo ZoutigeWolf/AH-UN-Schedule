@@ -15,7 +15,7 @@ struct WeekController: View {
             Button {
                 date = DateUtils.editDate(date, weeks: -1)
             } label: {
-                Image(systemName: "arrow.left.circle.fill")
+                Image(systemName: "arrow.left")
                     .foregroundStyle(.white)
                     .font(.system(size: 20))
             }
@@ -35,7 +35,7 @@ struct WeekController: View {
             Button {
                 date = DateUtils.editDate(date, weeks: 1)
             } label: {
-                Image(systemName: "arrow.right.circle.fill")
+                Image(systemName: "arrow.right")
                     .foregroundStyle(.white)
                     .font(.system(size: 20))
             }

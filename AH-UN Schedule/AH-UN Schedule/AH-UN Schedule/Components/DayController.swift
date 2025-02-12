@@ -18,11 +18,18 @@ struct DayController: View {
                     date = d
                 } label: {
                     VStack {
-                        Text(schedule?[d]?.first { $0.user.username == AuthManager.shared.user?.username }?.start.hourAndMinute() ?? "")
-                            .foregroundStyle(.primary)
-                            .tint(.primary)
-                            .font(.system(size: 10))
-                            .padding(.bottom, 4)
+                        if let shift = schedule?[d]?.first(where: { $0.user!.username == AuthManager.shared.user?.username }) {
+                            Text(shift.start.hourAndMinute())
+                                .foregroundStyle(shift.canceled ? .secondary : .primary)
+                                .strikethrough(shift.canceled)
+                                .tint(.primary)
+                                .font(.system(size: 9))
+                                .padding(.bottom, 4)
+                        } else {
+                            Text("")
+                                .font(.system(size: 10))
+                                .padding(.bottom, 4)
+                        }
                         
                         Text(DateUtils.getDayName(d).uppercased())
                             .foregroundStyle(.secondary)
@@ -33,7 +40,7 @@ struct DayController: View {
                             .foregroundStyle(.primary)
                             .tint(d.isToday() ? Color.red : Color.primary)
                         
-                        Rectangle()
+                        RoundedRectangle(cornerRadius: 2)
                             .frame(width: 32, height: 2)
                             .foregroundColor(Color(uiColor: d.isSameDate(date) ? .systemGray : .clear))
                     }

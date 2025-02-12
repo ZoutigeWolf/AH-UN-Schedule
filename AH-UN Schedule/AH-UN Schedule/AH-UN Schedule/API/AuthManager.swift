@@ -17,6 +17,7 @@ class AuthManager: ObservableObject {
     
     @Published var user: User?
     var token: String?
+    var deviceToken: String?
     
     init() {
         DispatchQueue.global().async {
@@ -57,18 +58,32 @@ class AuthManager: ObservableObject {
                 self.storeCredentialsInKeychain(username, password)
                 
                 self.getUser() { res in
-                    completion(res)
-                }
-                
-                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, err in
-                    if granted {
-                        DispatchQueue.main.async {
-                            UIApplication.shared.registerForRemoteNotifications()
+                    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, err in
+                        if granted {
+                            DispatchQueue.main.async {
+                                UIApplication.shared.registerForRemoteNotifications()
+                            }
                         }
                     }
+                    
+                    completion(res)
                 }
             }
         }
+    }
+    
+    func logout() {
+        UserManager.unregisterDevice() { res in }
+        
+        self.user = nil
+        self.token = nil
+        self.deviceToken = nil
+        
+        deleteCredentialFromKeychain()
+    }
+    
+    func calendarURL(user: User? = nil) -> URL {
+        return URL(string: "webcal://ah-un.zoutigewolf.dev/schedule/calendar/" + Data(user?.username.utf8 ?? self.user!.username.utf8).base64EncodedString())!
     }
     
     private func getUser(completion: @escaping (Bool) -> Void) {

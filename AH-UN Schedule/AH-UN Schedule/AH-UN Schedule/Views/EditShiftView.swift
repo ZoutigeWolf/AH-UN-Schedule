@@ -15,24 +15,29 @@ struct EditShiftView: View {
     @State var start: Date
     @State var end: Date
     @State var canceled: Bool
-    @State var position: Position? = nil
-    
-    private static let calendarManager: CalendarManager = CalendarManager()
     
     init(shift: Shift) {
         self.shift = shift
         
         _start = State(initialValue: shift.start)
-        _end = State(initialValue: shift.end ?? DateUtils.parseDate(hour: 22, minutes: 0)!)
+        _end = State(initialValue: shift.end ?? DateUtils.editDate(shift.start, hour: 22, minutes: 0)!)
         _canceled = State(initialValue: shift.canceled)
-        _position = State(initialValue: shift.position)
     }
     
     var body: some View {
         List {
             Section {
                 DatePicker("Start time", selection: $start, displayedComponents: [.hourAndMinute])
+                    .onChange(of: start) { _ in
+                        start = start.roundedToNearestQuarterHour()
+                    }
+                    .disabled(canceled)
+                
                 DatePicker("End time", selection: $end, displayedComponents: [.hourAndMinute])
+                    .onChange(of: end) { _ in
+                        end = end.roundedToNearestQuarterHour()
+                    }
+                    .disabled(canceled)
             }
             
             Section {
@@ -42,13 +47,12 @@ struct EditShiftView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-//        .navigationTitle("\(shift.user.name) \($start.wrappedValue.toString(as: "HH:mm"))")
         .toolbar {
             ToolbarItem(placement: .principal) {
                 VStack {
                     Text("\(DateUtils.getFullDayName(shift.start)), \(DateUtils.getMonthName(shift.start)) \(DateUtils.getDateComponent(shift.start, .day))")
                     
-                    Text("\(shift.user.name)")
+                    Text("\(shift.user!.name)")
                         .foregroundStyle(.secondary)
                         .font(.system(size: 12))
                 }

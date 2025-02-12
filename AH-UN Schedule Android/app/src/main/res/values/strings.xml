@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name" translatable="false">AH-UN</string>
+    <string name="tab.schedule">Schedule</string>
+    <string name="tab.insights">Insights</string>
+    <string name="tab.users">Users</string>
+    <string name="tab.settings">Settings</string>
+    <string name="tab.settings.account">Account</string>
+    <string name="tab.settings.calendar">Calendar</string>
+    <string name="tab.settings.notifications">Notifications</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab.schedule">Rooster</string>
+    <string name="tab.insights">Inzicht</string>
+    <string name="tab.users">Gebruikers</string>
+    <string name="tab.settings">Instellingen</string>
+    <string name="tab.settings.account">Account</string>
+    <string name="tab.settings.calendar">Kalender</string>
+    <string name="tab.settings.notifications">Notificaties</string>
+</resources>

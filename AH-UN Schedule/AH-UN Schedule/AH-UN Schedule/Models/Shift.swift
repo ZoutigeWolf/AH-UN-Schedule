@@ -13,9 +13,7 @@ struct Shift: Codable {
     var start: Date
     var end: Date?
     var canceled: Bool
-    var position: Position
-    
-    var user: User
+    var user: User?
     
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -38,15 +36,7 @@ struct Shift: Codable {
         }
         
         self.canceled = try container.decode(Bool.self, forKey: .canceled)
-        
-        self.position = .None
-        
-        self.user = try container.decode(User.self, forKey: .user)
-    }
-}
 
-enum Position: String, Codable, Hashable, CaseIterable {
-    case None   = "None"
-    case Meat   = "Meat"
-    case Dishes = "Dishes"
+        self.user = try container.decodeIfPresent(User.self, forKey: .user)
+    }
 }

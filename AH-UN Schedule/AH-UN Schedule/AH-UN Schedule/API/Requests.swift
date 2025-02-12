@@ -43,11 +43,19 @@ class Requests {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        dateFormatter.timeZone = TimeZone(identifier: "Europe/Amsterdam")
+        
+        let jsonEncoder = JSONEncoder()
+        jsonEncoder.dateEncodingStrategy = .formatted(dateFormatter)
+        
         if let data = data,
-           let jsonData = try? JSONEncoder().encode(data) {
+           let jsonData = try? jsonEncoder.encode(data) {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = jsonData
-            print(String(decoding: jsonData, as: UTF8.self))
+            print(String(data: jsonData, encoding: .utf8)!)
         }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in

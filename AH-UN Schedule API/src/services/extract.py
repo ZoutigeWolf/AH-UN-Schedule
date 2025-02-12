@@ -7,20 +7,21 @@ from datetime import datetime
 import unicodedata
 from openai import OpenAI
 import json
-from sqlmodel import Session, select
+from sqlmodel import Session, extract, select
 from tabulate import tabulate
 
+from src.database import engine
 from src.models.shift import Shift
 from src.models.user import User
-from sqlite3.dbapi2 import Date
-from multiprocessing.dummy import Value
+from src.models.user_settings import UserSettings
+from src.services.notifications import send_notification
 
 CELL_SIZE = (79, 23)
 BORDER_WIDTH = 1
 
 openai_client = OpenAI(api_key=os.getenv("OPENAI_KEY"))
 
- 
+
 def extract_table_from_image(image: bytes) -> list[list[str]]:
     img = cv2.imdecode(np.frombuffer(image, np.uint8), cv2.IMREAD_COLOR)
 
@@ -66,7 +67,7 @@ def clean_table_with_openai(table: list[list[str]]):
                 "role": "user",
                 "content": f"""
                 {table}
-                
+
                 You are a data input scientist that cleans up data for database storage
                 Take the above input data and clean all strings
 
@@ -114,11 +115,12 @@ def convert_table_to_shifts(session: Session, table: list[list[str]]) -> list[Sh
 
     for row in table[1:]:
         name = row[0]
+        username = name.lower().replace(" ", "")
 
-        user = session.exec(select(User).where(User.name == name)).one_or_none()
+        user = session.exec(select(User).where(User.username == username)).one_or_none()
 
         if not user:
-            user = User(username=name.lower(), name=name, password_hash=os.urandom(32), admin=False)
+            user = User(username=username, name=name, password_hash=os.urandom(32), admin=False)
             session.add(user)
 
         times  = []
@@ -145,3 +147,70 @@ def convert_table_to_shifts(session: Session, table: list[list[str]]) -> list[Sh
             )
 
     return shifts
+
+
+def parse_schedule(img_data: bytes, user: User):
+    with Session(engine) as session:
+        try:
+            print("Extracting text from image...")
+            data = extract_table_from_image(img_data)
+            data = [r for i, r in enumerate(data) if i == 0 or len(r[0])]
+
+            print(tabulate(data, headers="firstrow", tablefmt="rounded_grid"))
+
+            print("Cleaning data...")
+            data = clean_table_with_openai(data)
+
+            print("Parsing shifts...")
+            shifts = convert_table_to_shifts(session, data)
+
+            year, week = shifts[0].start.isocalendar()[:2]
+
+            existing_shifts = session.exec(
+                select(Shift)
+                    .where(
+                        extract("year", Shift.start) == year,
+                        extract("week", Shift.start) == week
+                    )
+            )
+
+            for s in existing_shifts:
+                session.delete(s)
+
+            for s in shifts:
+                session.add(s)
+
+            session.commit()
+
+            print("Done")
+
+        except Exception as e:
+            send_notification(
+                user,
+                title="Schedule parsing error",
+                body=str(e)
+            )
+
+            return
+
+        users = session.exec(
+            select(User)
+        ).all()
+
+        for u in users:
+            settings = session.exec(
+                select(UserSettings)
+                .where(UserSettings.username == u.username)
+            ).one_or_none()
+
+            if not settings:
+                settings = UserSettings(username=u.username)
+
+            if not settings.notifications_new_schedule:
+                continue
+
+            send_notification(
+                u,
+                title="New schedule",
+                body=f"The schedule for week {week} is now available"
+            )

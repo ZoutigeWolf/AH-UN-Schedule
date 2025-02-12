@@ -4,7 +4,6 @@ channels:
 dependencies:
     - python==3.12.8
     - numpy
-    - conda-forge::tesseract
     - fastapi
     - sqlmodel
     - python-dotenv
@@ -13,9 +12,15 @@ dependencies:
     - bcrypt
     - pyjwt
     - alembic
+    - cryptography
+    - pytz
     - conda-forge::openai
+    - conda-forge::tesseract
     - conda-forge::pytesseract
+    - conda-forge::httpx
+    - conda-forge::h2
+    - conda-forge::fastapi_utils
     - pip:
           - tabulate
           - opencv-python
- 
+          - ics

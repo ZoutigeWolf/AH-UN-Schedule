@@ -19,9 +19,9 @@ struct ScheduleItem: View {
     var body: some View {
         HStack {
             HStack(spacing: 2) {
-                Text(shift.user.name)
+                Text(shift.user!.name)
                     .foregroundStyle(shift.canceled ? .secondary : .primary)
-                    .bold(AuthManager.shared.user?.username == shift.user.username)
+                    .bold(AuthManager.shared.user?.username == shift.user!.username)
                     .strikethrough(shift.canceled, color: .secondary)
                 
 //                if let user = shift.user, user.isFulltime {
@@ -30,14 +30,6 @@ struct ScheduleItem: View {
 //                        .font(.system(size: 10))
 //                        .baselineOffset(10)
 //                }
-            }
-            
-            if shift.position != .None {
-                Text(shift.position.rawValue)
-                    .font(.system(size: 12))
-                    .padding(4)
-                    .background(Color(uiColor: positionColors[shift.position.rawValue] ?? .systemGray))
-                    .cornerRadius(4)
             }
             
             Spacer()

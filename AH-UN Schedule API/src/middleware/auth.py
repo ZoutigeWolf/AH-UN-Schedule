@@ -3,6 +3,8 @@ from fastapi import HTTPException, Depends
 import jwt
 from sqlmodel import Session, select
 from starlette.requests import Request
+import base64
+import bcrypt
 
 from src.database import get_session
 from src.models.user import User
@@ -10,7 +12,7 @@ from src.models.user import User
 SECRET_KEY = os.getenv("JWT_KEY")
 ALGORITHM = os.getenv("JWT_ALGO") or "HS256"
 
-def require_auth(request: Request, session: Session = Depends(get_session)):
+async def require_auth(request: Request, session: Session = Depends(get_session)):
     if "Authorization" not in request.headers:
         raise HTTPException(status_code=401)
 

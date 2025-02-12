@@ -40,9 +40,26 @@ struct EditUserView: View {
                 }
             }
             
+            Section(header: Text("Calendar URL")) {
+                Text(AuthManager.shared.calendarURL(user: user).absoluteString)
+                    .contextMenu {
+                        Button(action: {
+                            UIPasteboard.general.string = AuthManager.shared.calendarURL(user: user).absoluteString
+                        }) {
+                            Text("Copy To Clipboard")
+                            Image(systemName: "doc.on.clipboard")
+                        }
+                    }
+            }
+            
 
             if AuthManager.shared.user!.admin {
-                Section {
+                Section(header: Text("Danger Zone")) {
+                    NavigationLink(destination: ChangePasswordView(user: user)) {
+                        Text("Change Password")
+                    }
+                    .disabled(AuthManager.shared.user!.username == user.username)
+                    
                     Button(role: .destructive) {
                         delete()
                         presentationMode.wrappedValue.dismiss()

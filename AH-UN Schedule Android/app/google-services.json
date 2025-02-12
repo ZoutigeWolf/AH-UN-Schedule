@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "296517444081",
+    "project_id": "ah-un-schedule",
+    "storage_bucket": "ah-un-schedule.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296517444081:android:048104271ec7c7c9f22450",
+        "android_client_info": {
+          "package_name": "dev.zoutigewolf.ahun_schedule"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTpp_earEHdexUGjZpwiSp8y3EP7C-kWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

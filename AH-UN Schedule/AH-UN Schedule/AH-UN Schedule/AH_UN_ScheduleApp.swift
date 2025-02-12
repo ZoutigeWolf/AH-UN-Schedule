@@ -5,8 +5,8 @@
 //  Created by ZoutigeWolf on 14/03/2024.
 //
 
+import AVFoundation
 import SwiftUI
-
 
 @main
 struct AH_UN_ScheduleApp: App {
@@ -34,11 +34,11 @@ struct HomeView: View {
                     .foregroundStyle(.white)
             }
             
-//            InsightsView()
-//            .tabItem {
-//                Label("Insights", systemImage: "chart.bar.fill")
-//                    .foregroundStyle(.white)
-//            }
+            InsightsView()
+            .tabItem {
+                Label("Insights", systemImage: "chart.bar.fill")
+                    .foregroundStyle(.white)
+            }
             
             if let user = AuthManager.shared.user, user.admin {
                 UsersView()
@@ -58,10 +58,23 @@ struct HomeView: View {
 }
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.ambient, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("Failed to set audio category")
+        }
+        
+        return true
+    }
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceTokenData: Data) {
         let token = deviceTokenData.map { String(format: "%02x", $0) }.joined()
         
         print("Device Token: \(token)")
+        
+        AuthManager.shared.deviceToken = token
         
         UserManager.registerDevice(device: token) { res in }
     }

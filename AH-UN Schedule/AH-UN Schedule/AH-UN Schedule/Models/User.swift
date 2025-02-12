@@ -1,5 +1,5 @@
 //
-//  AuthModels.swift
+//  User.swift
 //  AH-UN Schedule
 //
 //  Created by ZoutigeWolf on 24/03/2024.
